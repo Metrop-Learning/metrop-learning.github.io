@@ -217,6 +217,9 @@ footer{
 }
 
 @media (max-width: 700px){
+    #title{
+        gap: 10px !important;
+    }
     #stats{
         flex-wrap: wrap;
     }
@@ -225,6 +228,7 @@ footer{
     }
     #titleLogo{
         font-size: 50px !important;
+        padding: 0px;
     }
     #subTitle{
         font-size: 7px !important;
@@ -260,6 +264,9 @@ footer{
       width: 100%;
       transform: translateX(0%) !important;
       border-radius: 0px;
+    }
+    .hero-image-l{
+        order: 1;
     }
     .hero {
   display: flex;
