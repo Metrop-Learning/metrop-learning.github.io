@@ -51,54 +51,6 @@ const img = document.getElementById("backgroundImage");
 img.src = "./pictures/" + imgToday.img
 document.getElementById('credit').innerHTML = imgToday.credit
 
-let data = [
-    { label: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg",   word: "China"      },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/a/af/Flag_of_South_Africa.svg",  word: "South Africa"    },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_%28Pantone%29.svg",     word: "Canada" },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Flag_of_the_United_States_%28Pantone%29.svg",  word: "USA"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_India.svg",   word: "India"       },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg",   word: "Indonesia"      },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg",     word: "Japan"   },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Nepal.svg", word: "Nepal"        },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Sri_Lanka.svg",   word: "Sri Lanka"    },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg",   word: "Germany"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg",       word: "Austria"    },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/9/92/Flag_of_Belgium_%28civil%29.svg",   word: "Belgium"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg",   word: "Denmark"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg",   word: "Spain"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",   word: "France"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Greece.svg",   word: "Greece"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg",   word: "Ireland"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg",   word: "Italy"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg",   word: "Norway"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/1/12/Flag_of_Poland.svg",   word: "Poland"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_United_Kingdom_%283-5%29.svg",   word: "United Kingdom"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/0/08/Flag_of_Switzerland_%28Pantone%29.svg",   word: "Switzerland"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg",   word: "Australia"     },
-    { label: "https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg",   word: "New Zealand"     }
-  ];
-
-  data = shuffle(data)
-
-  const inner = document.getElementById('scrollInner');
-  const counter = document.getElementById('counterNum');
-
-  data.forEach((d) => {
-    const div = document.createElement('div');
-    div.className = 'scroll-item';
-    div.innerHTML = `
-      <span class="item-label"><img style="height: 60px; width: auto;" src="${d.label}"></img></span>
-      <span class="item-word">${d.word}</span>
-    `;
-    inner.appendChild(div);
-  });
-
-  inner.addEventListener('scroll', () => {
-    const itemH = inner.clientHeight;
-    const index = Math.round(inner.scrollTop / itemH);
-    counter.textContent = index + 1;
-  });
-
 
 setInterval(
     () => {
@@ -123,4 +75,16 @@ function shuffle(list) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+traductAll("en")
+
+async function traductAll(codeLang){
+    const response = await fetch("./trad/trad_" + codeLang + ".json");
+    const trad_file = await response.json();
+    //all translation :
+    const trad_el = document.querySelectorAll('*[trad-i18n]');
+    trad_el.forEach(el => {
+      el.innerText = trad_file[el.getAttribute('trad-i18n')]
+    });
 }
